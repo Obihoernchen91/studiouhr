@@ -1,0 +1,43 @@
+/*Sendungsinformationen und Div für das Hinzufügen von Positionen zu einer Sendung*/
+/**********************************************************************************/
+div#sideInfo {
+	-webkit-border-top-right-radius: 20px;
+	-webkit-border-bottom-right-radius: 20px;
+	-moz-border-radius-topright: 20px;
+	-moz-border-radius-bottomright: 20px;
+	border-top-right-radius: 20px;
+	border-bottom-right-radius: 20px;
+	position:fixed;
+	width:auto;
+	top:25%;
+	left:15px;
+	border:2px solid #D8D8D8;
+	padding:10px;
+	background-color:white;
+	display: none;
+}
+div#addPos {
+	-webkit-border-top-left-radius: 20px;
+	-webkit-border-bottom-left-radius: 20px;
+	-moz-border-radius-topleft: 20px;
+	-moz-border-radius-bottomleft: 20px;
+	border-top-left-radius: 20px;
+	border-bottom-left-radius: 20px;
+	position:fixed;
+	width:auto;
+	top:25%;
+	right:15px;
+	border:2px solid #D8D8D8;
+	padding:0 10px 10px 10px;
+	background-color:white;
+	display: none;
+}
+/*Button auf der Startseite*/
+/***************************/
+button#startButton {
+	display: block;
+	height:125px;
+	width:300px;
+	font-size: 30px;
+	margin: 5px auto;
+}
