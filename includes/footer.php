@@ -35,9 +35,21 @@ $(document).ready(function() {
     $( "#datum" ).datepicker($.datepicker.regional[ "de" ]);
 
 //Funktion für den Countdown auf der Startseite
-    $('#clock').countdown('2015/11/18 09:15', function(event) {
+    $('#clock').countdown('2015/12/18 09:15', function(event) {
     	$(this).html(event.strftime('%D Tage %H:%M:%S'));
     })
+
+    $( "tbody" ).sortable({
+    	placeholder: "ui-state-highlight",
+    	stop: function( event, ui ){
+        $(this).find('tr').each(function(i){
+            $(this).find('td:nth-child(2)').each(function(){
+            	$(this).find("input").val(i+1);
+            })
+        });
+    }
+    });
+    $( "tbody" ).disableSelection();
 
 })
 </script>

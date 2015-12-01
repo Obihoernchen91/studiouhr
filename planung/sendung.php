@@ -32,7 +32,7 @@
 														<button type='button' class='close' data-dismiss='alert' aria-label='Schließen'>
 														  <span aria-hidden='true'>&times;</span>
 														</button>
-														<b>Super!</b> Sendung wurde erfolgreich geupdated!</div>";}
+														<b>Super!</b> Sendung wurde erfolgreich aktualisiert!</div>";}
 					if(isset($_GET['fehl'])) {echo "<div class='alert alert-danger' role='alert' style='text-align:center;'>
 														<button type='button' class='close' data-dismiss='alert' aria-label='Schließen'>
 														  <span aria-hidden='true'>&times;</span>
@@ -55,7 +55,8 @@
 							
 							<table class="table table-hover">
 								<thead>
-									<tr><th>Position</th>
+									<tr><th></th>
+										<th>Position</th>
 										<th>Inhalt</th>
 										<th>Typ</th>
 										<th>Dauer</th>
@@ -66,7 +67,8 @@
 								<?php
 									while($positionen = mysqli_fetch_array($positionen_an)) {
 										
-										echo "<tr><td><input type='number' name='pos[]' style='width: 35px; text-align:center;' value='".$positionen['position']."' readonly></td>";
+										echo "<tr><td><span class='ui-icon ui-icon-arrowthick-2-n-s'></span></td>";
+										echo "<td><input type='number' name='pos[]' style='width: 35px; text-align:center;' value='".$positionen['position']."' readonly></td>";
 										echo "<td><input type='text' value='".$positionen['inhalt']."' name='inhalt[]' style='width: 200px;'></td>";
 										echo "<td>";
 											echo "<select name='typ[]' class='selectpicker form-control'>";
@@ -81,7 +83,7 @@
 											echo "</select>";
 										echo "</td>";
 										echo "<td><input id='time' type='text' value='".$positionen['dauer']."' name='dauer[]' style='width: 80px;' placeholder='hh:mm:ss'></td>";
-										echo "<td><input id='time' type='text' value='".$positionen['dauer_ges']."' style='width: 80px;' placeholder='hh:mm:ss' readonly='readonly'></td>";
+										echo "<td><input id='time' type='text' value='".$positionen['dauer_ges']."' style='width: 80px;' placeholder='hh:mm:ss' readonly='readonly'></td></tr>";
 
 									}
 									echo "<input type='text' name='sendungID' value='".intval(mysqli_real_escape_string($sql, trim($_GET['sendung'])))."' style='display:none;'>";
