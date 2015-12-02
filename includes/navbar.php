@@ -41,7 +41,7 @@
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="../index.php">
-          <img alt="Studiouhr" src="../includes/images/icon.png" width="22px">
+          <span class="glyphicon glyphicon-time"></span>
         </a>
         <a class="navbar-brand" href="../start/start.php" style="font-size: 22px;">
           Studiouhr

@@ -50,6 +50,7 @@
 							<div class="btn-group">
 								<button type="submit" name="update_positionen" class="btn btn-success">Speichern</button>
 								<button type="button" id="toggle" class="btn btn-default">Info ein- / ausblenden</button>
+								<button type="button" id="addRow" class="btn btn-default">neue Zeile</button>
 							</div>
 								<button type="submit" name="delete_sendung" class="btn btn-danger">Sendung l&ouml;schen</button>
 							
@@ -67,9 +68,9 @@
 								<?php
 									while($positionen = mysqli_fetch_array($positionen_an)) {
 										
-										echo "<tr><td><span class='ui-icon ui-icon-arrowthick-2-n-s'></span></td>";
-										echo "<td><input type='number' name='pos[]' style='width: 35px; text-align:center;' value='".$positionen['position']."' readonly></td>";
-										echo "<td><input type='text' value='".$positionen['inhalt']."' name='inhalt[]' style='width: 200px;'></td>";
+										echo "<tr><td style='text-align:center; vertical-align:middle;'><span class='glyphicon glyphicon-resize-vertical'></span></td>";
+										echo "<td style='vertical-align:middle;'><input type='number' name='pos[]' style='width: 35px; text-align:center;' value='".$positionen['position']."' readonly></td>";
+										echo "<td style='vertical-align:middle;'><input type='text' value='".$positionen['inhalt']."' name='inhalt[]' style='width: 200px;'></td>";
 										echo "<td>";
 											echo "<select name='typ[]' class='selectpicker form-control'>";
 												$typ_ab = "SELECT * FROM typen ORDER BY typ ASC;";
@@ -82,20 +83,18 @@
 												}
 											echo "</select>";
 										echo "</td>";
-										echo "<td><input id='time' type='text' value='".$positionen['dauer']."' name='dauer[]' style='width: 80px;' placeholder='hh:mm:ss'></td>";
-										echo "<td><input id='time' type='text' value='".$positionen['dauer_ges']."' style='width: 80px;' placeholder='hh:mm:ss' readonly='readonly'></td></tr>";
+										echo "<td style='vertical-align:middle;'><input id='time' type='text' value='".$positionen['dauer']."' name='dauer[]' style='width: 80px;' placeholder='hh:mm:ss'></td>";
+										echo "<td style='vertical-align:middle;'><input id='time' type='text' value='".$positionen['dauer_ges']."' style='width: 80px;' placeholder='hh:mm:ss' readonly='readonly'></td></tr>";
 
 									}
-									echo "<input type='text' name='sendungID' value='".intval(mysqli_real_escape_string($sql, trim($_GET['sendung'])))."' style='display:none;'>";
+									echo "<tr style='display:none;'><td><input type='text' name='sendungID' value='".intval(mysqli_real_escape_string($sql, trim($_GET['sendung'])))."'></td></tr>";
 									?>
 								</tbody>
 							</table>	
 						</form>
-
-				
 			</div>
 
-			<div id="sideInfo" class="row">
+			<div id="sideInfo" class="container ui-widget-content">
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12">
 						<h3 style="text-align:center">Sendungsdaten</h3><hr>
@@ -109,7 +108,7 @@
 							<div class="form-group">
 								<label for="sendungErstelltAm" class="col-sm-4 control-label">erstellt am</label>
 								<div class="col-sm-8">
-								  <input type="text" class="form-control" id="sendungErstelltAm" name="sendungErstelltAm" <?php echo "value='".date("d.m.Y", strtotime($sendung['zeitstempel']))."'"; ?> placeholder="erstellt am..." required>
+								  <input type="text" class="form-control" id="sendungErstelltAm" name="sendungErstelltAm" <?php echo "value='".date("d.m.Y", strtotime($sendung['zeitstempel']))."'"; ?> placeholder="erstellt am..." readonly="readonly" required>
 								</div>
 							</div>
 							<div class="form-group">

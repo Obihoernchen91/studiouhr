@@ -73,6 +73,21 @@ if(isset($_POST['update_positionen'])) {
 	$kum_dauer = date("H:i:s", strtotime("00:00:00"));
 	$sendungID = mysqli_real_escape_string($sql, intval(trim($_POST['sendungID'])));
 
+	$check_ab = "SELECT * FROM positionen WHERE sendungID = '".$sendungID."';";
+	$check_an = mysqli_query($sql, $check_ab);
+	$check_anz = mysqli_num_rows($check_an);
+
+
+	if($anz_pos > $check_anz) {
+		$pos = intval($anz_pos) - intval($check_anz);
+		$p = $check_anz;
+		for($i=1; $i<=$pos; $i++) {
+			$p++;
+			$insert_ab = "	INSERT INTO `positionen`(`sendungID`, `position`, `typID`)
+							VALUES ('$sendungID','$p','1');";
+			$insert_an = mysqli_query($sql, $insert_ab);
+		}
+	}
 
 	for($i=0; $i<$anz_pos; $i++) {
 
@@ -82,12 +97,14 @@ if(isset($_POST['update_positionen'])) {
 		#######################
 		#aktuelle Gesamtzeit in Sekunden umrechnen, wenn nicht 00:00:00
 		if($kum_dauer != "00:00:00") {
-			$kum_sekunden = (intval(substr($kum_dauer, 0, 2) * 3600)) + (intval(substr($kum_dauer, 3, 2) * 60)) + (intval(substr($kum_dauer, 5, 2)));
+			$kum_dauer = explode(":", $kum_dauer);
+			$kum_sekunden = (intval($kum_dauer[0] * 3600)) + (intval($kum_dauer[1] * 60)) + (intval($kum_dauer[2]));
 		}
 		else {$kum_sekunden = intval("0");}
 		#aktuelle Positionsdauer in Sekunden umrechnen, wenn nicht 00:00:00
 		if($d[$i] != "00:00:00") {
-			$dauer_sekunden = (intval(substr($d[$i], 0, 2) * 3600)) + (intval(substr($d[$i], 3, 2) * 60)) + (intval(substr($d[$i], 5, 2)));
+			$dauer_s = explode(":", $d[$i]);
+			$dauer_sekunden = (intval($dauer_s[0] * 3600)) + (intval($dauer_s[1] * 60)) + (intval($dauer_s[2]));
 		}
 		else {$dauer_sekunden = intval("0");}
 		#beide Sekundenwerte wieder zusammenfassen
@@ -101,6 +118,8 @@ if(isset($_POST['update_positionen'])) {
 		if(!empty($typen[$i])) {$typ = intval(mysqli_real_escape_string($sql, $typen[$i]));} else {$typ = "1";}
 		if(!empty($d[$i])) {$dauer = mysqli_real_escape_string($sql, $d[$i]);} else {$dauer = "00:00:00";}
 
+		#Daten eintragen
+		################
 		$update_ab = "	UPDATE `positionen` 
 						SET `inhalt`='$inhalt',`typID`='$typ',`dauer`='$dauer',`dauer_ges`='$kum_dauer'
 						WHERE sendungID = '".$sendungID."' AND position = '".$pos."';";
