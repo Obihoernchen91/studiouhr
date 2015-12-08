@@ -21,6 +21,7 @@ include "../includes/navbar.php";
 				<a href="../planung/sendung.php" style="text-decoration:none;"><button type="submit" class="btn btn-primary" id="startButton">Planung</button></a>
 				<button type="button" class="btn btn-primary" id="startButton" data-toggle="modal" data-target="#crew">Studio Crew</button>
 				<button type="button" class="btn btn-primary" id="startButton" data-toggle="modal" data-target="#moderation">Moderation</button>
+				<a href="../nutzer/nutzerverwaltung.php" style="text-decoration:none;"><button type="submit" class="btn btn-warning" id="startButton" style="height:62px;">Nutzerverwaltung</button></a>
 
 			</div>
 		</div>

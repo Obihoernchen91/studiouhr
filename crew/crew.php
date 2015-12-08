@@ -23,7 +23,7 @@
 		<div id="realtimeClock"></div>
 		<h1 style="text-align:center" class="page-header">&Uuml;bersicht f&uuml;r Studiocrew</h1>		
 			<form method="post" action="c_sendung.php">
-				<table class="table table-hover table-responsive">
+				<table class="table table-hover table-responsive" id="crew">
 					<thead>
 						<tr><th></th>
 							<th>Position</th>

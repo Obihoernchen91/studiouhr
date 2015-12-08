@@ -73,22 +73,6 @@ if(isset($_POST['update_positionen'])) {
 	$kum_dauer = date("H:i:s", strtotime("00:00:00"));
 	$sendungID = mysqli_real_escape_string($sql, intval(trim($_POST['sendungID'])));
 
-	$check_ab = "SELECT * FROM positionen WHERE sendungID = '".$sendungID."';";
-	$check_an = mysqli_query($sql, $check_ab);
-	$check_anz = mysqli_num_rows($check_an);
-
-
-	if($anz_pos > $check_anz) {
-		$pos = intval($anz_pos) - intval($check_anz);
-		$p = $check_anz;
-		for($i=1; $i<=$pos; $i++) {
-			$p++;
-			$insert_ab = "	INSERT INTO `positionen`(`sendungID`, `position`, `typID`)
-							VALUES ('$sendungID','$p','1');";
-			$insert_an = mysqli_query($sql, $insert_ab);
-		}
-	}
-
 	for($i=0; $i<$anz_pos; $i++) {
 
 		$pos = intval($i+1);
@@ -112,7 +96,7 @@ if(isset($_POST['update_positionen'])) {
 		#neue Gesamtzeit (Sekunden) wieder aufsplitten
 		$kum_dauer = 	(str_pad(floor($kum_dauer/3600), 2 ,'0', STR_PAD_LEFT)).":".		#Gesamtsekunden durch 3600 rechnen, dann immer abrunden und wenn Zahl keine 2 Stellen hat, mit 0 vorne auffüllen
 						(str_pad(floor(($kum_dauer%3600)/60), 2 ,'0', STR_PAD_LEFT)).":".	#Den bei der vorigen Rechnung übrigen Rest durch 60 teilen und dann wie oben
-						(str_pad(floor($kum_dauer%60), 2 ,'0', STR_PAD_LEFT));				#Den bei der vorigen Rechnung übrigen Rest als Sekunden nehmen und wie oben
+						(str_pad(floor(($kum_dauer%3600)%60), 2 ,'0', STR_PAD_LEFT));				#Den bei der vorigen Rechnung übrigen Rest als Sekunden nehmen und wie oben
 
 		if(!empty($inhalte[$i])) {$inhalt = mysqli_real_escape_string($sql, $inhalte[$i]);} else {$inhalt = "";}
 		if(!empty($typen[$i])) {$typ = intval(mysqli_real_escape_string($sql, $typen[$i]));} else {$typ = "1";}
@@ -161,6 +145,32 @@ if(isset($_POST['delete_sendung'])) {
 	$delete_an = mysqli_query($sql, $delete_ab);
 
 	if($delete_an) {header("Location: sendung.php?del");}
+}
+
+############################################
+#Funktionen, um einzelne Position zu löschen
+############################################
+
+if(isset($_GET['deletePosition'])) {
+	if(isset($_POST['pos']) && $_POST['pos']!='') {$position = intval(mysqli_real_escape_string($sql, trim($_POST['pos'])));}
+	if(isset($_POST['sendung']) && $_POST['sendung']!='') {$sendung = intval(mysqli_real_escape_string($sql, trim($_POST['sendung'])));}
+
+		$delete_ab = "	DELETE FROM `positionen`
+						WHERE position = '".$position."'
+						AND sendungID = '".$sendung."';";
+		$delete_an = mysqli_query($sql, $delete_ab);
+}
+
+#######################################
+#Funktionen, um neue Zeile hinzuzufügen
+#######################################
+
+if(isset($_GET['addPosition'])) {
+	if(isset($_POST['nr']) && $_POST['nr']!='') {$nr = intval(mysqli_real_escape_string($sql, trim($_POST['nr'])));}
+	if(isset($_POST['id']) && $_POST['id']!='') {$id = intval(mysqli_real_escape_string($sql, trim($_POST['id'])));}
+
+	$add_ab = "INSERT INTO `positionen`(`sendungID`, `position`, `typID`) VALUES ('$id','$nr','1');";
+	$add_an = mysqli_query($sql, $add_ab);
 }
 
 ?>

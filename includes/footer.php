@@ -15,7 +15,7 @@ $(document).ready(function() {
 //Funktion für die Sidebar auf der Bearbeitungsseite für Sendungen
 //################################################################
     $('#toggle').click(function(){
-    	$('#sideInfo').toggle('drop', 800);
+    	$('#sideInfo').toggle('drop', 500);
     })
 
 //################################################
@@ -67,26 +67,64 @@ $(document).ready(function() {
 	function realtimeClock() {
 		$('#realtimeClock').text(moment().format('H:mm:ss') + " Uhr");
 	}
-	setInterval(realtimeClock, 1000);
+	setInterval(realtimeClock, 200);
 
 //#########################################################
 //Funktion, um eine neue Zeile mit einem Klick hinzuzufügen
 //#########################################################
     var laenge = $('tbody tr').length-1;
-    //-1, da bei jedem Klick die Länge am Anfang um 1 erhöht werden muss --> es gibt noch ein verstecktes TD mit SendungsID (letztes)
+    //-1, da bei jedem Klick die Länge am Anfang um 1 erhöht werden muss --> es gibt noch ein verstecktes td mit SendungsID (letztes)
 	
 	$('#addRow').click(function(){
 		laenge += 1;
+		var id = $('#sendungID').val();
 		    var input1 = '<td style="text-align:center; vertical-align:middle;"><span class="glyphicon glyphicon-resize-vertical"></span></td>';
 	    	var input2 = '<td><input type="number" name="pos['+ laenge +']" style="width: 35px; text-align:center;" value="'+ laenge +'" readonly></td>';
 	    	var input3 = '<td><input type="text" value="" name="inhalt['+ laenge +']" style="width: 200px;""></td>';
 	    	var input4 = '<td><select name="typ['+ laenge +']"><option value="1">MAZ</option><option value="2">Studio</option></select></td>';
 	    	var input5 = '<td><input id="time" type="text" value="00:00:00" name="dauer['+ laenge +']" style="width: 80px;" placeholder="hh:mm:ss"></td>';
 	    	var input6 = '<td><input id="time" type="text" value="00:00:00" name="dauer_ges['+ laenge +']" style="width: 80px;" placeholder="hh:mm:ss" readonly></td>';
-	    var input = '<tr>' + input1 + input2 + input3 + input4 + input5 + input6 + '<tr>';
-
+	    	var input7 = '<td><button id="deleteButton" class="btn btn-danger" type="button"><span class="glyphicon glyphicon-remove-circle"></span></button></td>';
+	    var input = '<tr>' + input1 + input2 + input3 + input4 + input5 + input6 + input7 + '<tr>';
 		$('tbody tr:nth-last-child(2)').after(input);
+		$.ajax({
+		    url: "c_sendung.php?addPosition",
+		    type: "post",
+		    data: {	'nr': laenge,
+		    		'id': id},
+		    //success: function(msg){prompt('Nachricht', msg);}
+		});
+		//location.reload();
 	});
+
+//###########################################################
+//Funktion, um eine einzelne Zeile mit einem Klick zu löschen
+//###########################################################
+/*
+	$("tbody #deleteButton").on("click",function() {
+        var tr = $(this).closest('tr');
+        tr.fadeOut(400, function(){
+            tr.remove();
+        });
+
+        var position = tr.find('td:nth-child(2)').find('input').val();
+        var id = $('#sendungID').val();
+        $.ajax({
+		    url: "c_sendung.php?deletePosition",
+		    type: "post",
+		    data: {	'pos':		position,
+					'sendung':	id}
+		});
+        location.reload();
+    });
+*/
+	if($('tbody').find('tr:first').find('td:nth-child(2)').find("input").val() != 1) {
+		$('tbody').find('tr').each(function(i){
+	        $(this).find('td:nth-child(2)').each(function(){
+	        	$(this).find("input").val(i+1);
+	        })
+    	});
+	}
 
 });
 </script>

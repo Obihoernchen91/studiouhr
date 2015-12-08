@@ -54,7 +54,7 @@
           <li><a href="../planung/sendung.php">Planung</a></li>
           <li><a href="" data-toggle="modal" data-target="#crew">Studio Crew</a></li>
           <li><a href="" data-toggle="modal" data-target="#moderation">Moderation</a></li>
-          <li><a href="../nutzer/nutzer.php">Nutzerverwaltung</a></li>
+          <li><a href="../nutzer/nutzerverwaltung.php">Nutzerverwaltung</a></li>
         </ul>
           <a href="../login/logout.php"><button type="submit" class="btn btn-danger navbar-btn" style="float:right;">Logout</button></a>
           <p class="navbar-text" style="float:right;">angemeldet als <?php echo "<a href='../nutzer/nutzer.php?nutzer=".$_SESSION['nutzerID']."'>".$_SESSION['name']."</a> ";?> </p>

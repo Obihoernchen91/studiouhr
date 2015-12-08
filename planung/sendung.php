@@ -53,6 +53,7 @@
 								<button type="button" id="addRow" class="btn btn-default">neue Zeile</button>
 							</div>
 								<button type="submit" name="delete_sendung" class="btn btn-danger">Sendung l&ouml;schen</button>
+								<div id="probe"></div>
 							
 							<table class="table table-hover">
 								<thead>
@@ -62,6 +63,7 @@
 										<th>Typ</th>
 										<th>Dauer</th>
 										<th>Dauer ges.</th>
+										<th></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -84,10 +86,10 @@
 											echo "</select>";
 										echo "</td>";
 										echo "<td style='vertical-align:middle;'><input id='time' type='text' value='".$positionen['dauer']."' name='dauer[]' style='width: 80px;' placeholder='hh:mm:ss'></td>";
-										echo "<td style='vertical-align:middle;'><input id='time' type='text' value='".$positionen['dauer_ges']."' style='width: 80px;' placeholder='hh:mm:ss' readonly='readonly'></td></tr>";
-
+										echo "<td style='vertical-align:middle;'><input id='time' type='text' value='".$positionen['dauer_ges']."' style='width: 80px;' placeholder='hh:mm:ss' readonly='readonly'></td>";
+										echo "<td><button id='deleteButton' class='btn btn-danger' type='button'><span class='glyphicon glyphicon-remove-circle'></span></button></td></tr>";
 									}
-									echo "<tr style='display:none;'><td><input type='text' name='sendungID' value='".intval(mysqli_real_escape_string($sql, trim($_GET['sendung'])))."'></td></tr>";
+									echo "<tr style='display:none;'><td><input type='text' id='sendungID' name='sendungID' value='".intval(mysqli_real_escape_string($sql, trim($_GET['sendung'])))."'></td></tr>";
 									?>
 								</tbody>
 							</table>	

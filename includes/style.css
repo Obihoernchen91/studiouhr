@@ -16,22 +16,6 @@ div#sideInfo {
 	background-color:white;
 	display: none;
 }
-div#addPos {
-	-webkit-border-top-left-radius: 20px;
-	-webkit-border-bottom-left-radius: 20px;
-	-moz-border-radius-topleft: 20px;
-	-moz-border-radius-bottomleft: 20px;
-	border-top-left-radius: 20px;
-	border-bottom-left-radius: 20px;
-	position:fixed;
-	width:auto;
-	top:25%;
-	right:15px;
-	border:2px solid #D8D8D8;
-	padding:0 10px 10px 10px;
-	background-color:white;
-	display: none;
-}
 /*Button auf der Startseite*/
 /***************************/
 button#startButton {
@@ -41,8 +25,13 @@ button#startButton {
 	font-size: 30px;
 	margin: 5px auto;
 }
+/*Uhr für die Studiocrew*/
+/************************/
 div#realtimeClock {
 	text-align: center;
 	font-size: 3em;
 	font-family: dotum;
 }
+
+#crew .ui-selecting { background: #FECA40; }
+#crew .ui-selected { background: #F39814; color: white; }
