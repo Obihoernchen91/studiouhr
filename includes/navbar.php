@@ -28,7 +28,7 @@
 ?>
 
 <div class="row">
-  <div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-offset-1 col-lg-10">
 
   <nav class="navbar navbar-default">
     <div class="container-fluid">

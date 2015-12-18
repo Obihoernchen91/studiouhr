@@ -64,8 +64,20 @@ $(document).ready(function() {
 //############################################
 //Echtzeit als Uhr ausgeben für die Studiocrew
 //############################################
+//in regelmäßigen Abständen das php-script abfragen, was jedesmal die aktuelle Systemzeit als timestamp zurückgibt(theoretisch)
+//diesen dann mit moment.js in passendes Format umwandeln (theoretisch) und ausgeben
+//vorher den zurückgegebenen Wert mit 'alert' testen
 	function realtimeClock() {
-		$('#realtimeClock').text(moment().format('H:mm:ss') + " Uhr");
+		$.ajax({
+		    type: 'POST',
+		    async: false,   // WICHTIG! 
+		    url: 'zeit.php',
+		    data: ({'time': '1'}),
+		    success: function(msg) {
+		    	alert(msg);
+		    	//$('#realtimeClock').text(moment(msg).format('H:mm:ss') + " Uhr");
+		    }
+		})
 	}
 	setInterval(realtimeClock, 200);
 
