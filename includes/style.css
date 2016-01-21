@@ -15,6 +15,7 @@ div#sideInfo {
 	padding:10px;
 	background-color:white;
 	display: none;
+	box-shadow: 5px 5px 5px grey;
 }
 /*Button auf der Startseite*/
 /***************************/
@@ -33,5 +34,21 @@ div#realtimeClock {
 	font-family: dotum;
 }
 
-#crew .ui-selecting { background: #FECA40; }
-#crew .ui-selected { background: #F39814; color: white; }
+#moderation {
+	margin-top: 50px;
+}
+#moderation thead tr th {
+	font-size: 30pt;
+	text-align: center;
+}
+#moderation tbody tr {
+	font-size: 25pt;
+}
+#moderation tbody tr:first-child td {
+	font-size: 30pt;
+	padding: 70px 0;
+	vertical-align: middle;
+}
+#moderation tbody tr:first-child td:last-child {
+	font-size: 70pt;
+}
