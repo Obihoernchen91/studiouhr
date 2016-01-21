@@ -21,7 +21,8 @@
 	<div class="row">
 		<div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
 		<div id="realtimeClock"></div>
-		<h1 style="text-align:center" class="page-header">&Uuml;bersicht f&uuml;r Studiocrew</h1>		
+		<h1 style="text-align:center" class="page-header">&Uuml;bersicht f&uuml;r Studiocrew</h1>
+		<button id="sendung_start" type="button">Sendung starten</button>	
 			<form method="post" action="c_sendung.php">
 				<table class="table table-hover table-responsive" id="crew">
 					<thead>
@@ -31,13 +32,18 @@
 							<th>Typ</th>
 							<th>Dauer</th>
 							<th>Dauer ges.</th>
+							<th><span id="neueZeit"></span></th>
 						</tr>
 					</thead>
 					<tbody>
 					<?php
+						$pos_count=0;
 						while($positionen = mysqli_fetch_array($positionen_an)) {
+							if(!$positionen['deleted'])
+							{
+							$pos_count++;
 							echo "<tr><td style='text-align:center; vertical-align:middle;'><span class='glyphicon glyphicon-resize-vertical'></span></td>";
-							echo "<td style='vertical-align:middle;'><input type='number' name='pos[]' style='width: 35px; text-align:center;' value='".$positionen['position']."' readonly></td>";
+							echo "<td style='vertical-align:middle;'><input type='number' name='pos[]' style='width: 35px; text-align:center;' value='$pos_count' readonly></td>";
 							echo "<td style='vertical-align:middle;'><input type='text' value='".$positionen['inhalt']."' name='inhalt[]' style='width: 200px;'></td>";
 							echo "<td>";
 								echo "<select name='typ[]' class='selectpicker form-control'>";
@@ -51,16 +57,17 @@
 									}
 								echo "</select>";
 							echo "</td>";
-							echo "<td style='vertical-align:middle;'><input id='time' type='text' value='".$positionen['dauer']."' name='dauer[]' style='width: 80px;' placeholder='hh:mm:ss'></td>";
-							echo "<td style='vertical-align:middle;'><input id='time' type='text' value='".$positionen['dauer_ges']."' name='dauer_ges[]' style='width: 80px;' placeholder='hh:mm:ss'></td>";
+							echo "<td style='vertical-align:middle;' id='time_".$pos_count."'>".$positionen['dauer']."</td>";
+							echo "<td style='vertical-align:middle;'><input id='time2' type='text' value='".$positionen['dauer_ges']."' name='dauer_ges[]' style='width: 80px;' placeholder='hh:mm:ss'></td>";
+							}
 						}
-						echo "<tr style='display:none;'><td colspan='6'><input type='text' name='sendungID' value='".intval(mysqli_real_escape_string($sql, trim($_GET['sendung'])))."'></td></tr>";
+						echo "<tr style='display:none;'><td colspan='6'><input type='text' id='sendungID' name='sendungID' value='".intval(mysqli_real_escape_string($sql, trim($_GET['sendung'])))."'></td></tr>";
 						?>
 					</tbody>
 				</table>
 				<input type="submit" value="Speichern" name="update_sendung" class="btn btn-primary" style="float:left; margin:0 5px;">
-				<a href="../start/start.php"><button type="button" class="btn btn-primary">Zur&uuml;ck zum Hauptmen&uuml;</button></a>
 			</form>
+			
 		</div>
 	</div>
 </div>
