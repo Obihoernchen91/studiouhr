@@ -39,6 +39,7 @@ $(document).ready(function() {
 	    yearSuffix: ''};
     $( "#datum" ).datepicker($.datepicker.regional[ "de" ]);
 
+
 //#############################################
 //Funktion für den Countdown auf der Startseite
 //#############################################
@@ -60,27 +61,6 @@ $(document).ready(function() {
     	}
     });
     $( "tbody" ).disableSelection();
-
-//############################################
-//Echtzeit als Uhr ausgeben für die Studiocrew
-//############################################
-//in regelmäßigen Abständen das php-script abfragen, was jedesmal die aktuelle Systemzeit als timestamp zurückgibt(theoretisch)
-//diesen dann mit moment.js in passendes Format umwandeln (theoretisch) und ausgeben
-//vorher den zurückgegebenen Wert mit 'alert' testen
-
-	function realtimeClock() {
-		$.ajax({
-		    type: 'POST',
-		    async: false,   // WICHTIG! 
-		    url: '../includes/zeit.php', //habs mal richtig verlinkt
-		    data: ({'time': '1'}),
-		    success: function(msg) {
-		    	alert(msg);
-		    	//$('#realtimeClock').text(moment(msg).format('H:mm:ss') + " Uhr");
-		    }
-		})
-	}
-	//setInterval(realtimeClock, 2000); //es nervt derzeit ziemlich
 
 //#########################################################
 //Funktion, um eine neue Zeile mit einem Klick hinzuzufügen
@@ -110,27 +90,7 @@ $(document).ready(function() {
 		//location.reload();
 	});
 
-//###########################################################
-//Funktion, um eine einzelne Zeile mit einem Klick zu löschen
-//###########################################################
-	/*
-	$("tbody #deleteButton").on("click",function() {
-        var tr = $(this).closest('tr');
-        tr.fadeOut(400, function(){
-            tr.remove();
-        });
 
-        var position = tr.find('td:nth-child(2)').find('input').val();
-        var id = $('#sendungID').val();
-        $.ajax({
-		    url: "c_sendung.php?deletePosition",
-		    type: "post",
-		    data: {	'pos':		position,
-					'sendung':	id}
-		});
-        location.reload();
-    });
-	*/
 	if($('tbody').find('tr:first').find('td:nth-child(2)').find("input").val() != 1) {
 		$('tbody').find('tr').each(function(i){
 	        $(this).find('td:nth-child(2)').each(function(){
@@ -176,7 +136,7 @@ $(document).ready(function() {
 				    type: "post",
 				    data: {	'dauer': 	w_dauer,
 							'id' : 		w_id,
-							'pos' : 	w_pos},
+							'pos' : 	w_pos}
 				});
 			}
 			setInterval(write, 1000);
@@ -185,13 +145,9 @@ $(document).ready(function() {
 	};
 	setInterval(starten, 500);
 
-	function neu(){
-		<?php renew(); ?>
-	}
-	setInterval(neu, 1000);
 
-	
 });
+
 </script>
 
 </body>
