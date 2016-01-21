@@ -67,11 +67,12 @@ $(document).ready(function() {
 //in regelmäßigen Abständen das php-script abfragen, was jedesmal die aktuelle Systemzeit als timestamp zurückgibt(theoretisch)
 //diesen dann mit moment.js in passendes Format umwandeln (theoretisch) und ausgeben
 //vorher den zurückgegebenen Wert mit 'alert' testen
+
 	function realtimeClock() {
 		$.ajax({
 		    type: 'POST',
 		    async: false,   // WICHTIG! 
-		    url: 'zeit.php',
+		    url: '../includes/zeit.php', //habs mal richtig verlinkt
 		    data: ({'time': '1'}),
 		    success: function(msg) {
 		    	alert(msg);
@@ -79,7 +80,7 @@ $(document).ready(function() {
 		    }
 		})
 	}
-	setInterval(realtimeClock, 200);
+	//setInterval(realtimeClock, 2000); //es nervt derzeit ziemlich
 
 //#########################################################
 //Funktion, um eine neue Zeile mit einem Klick hinzuzufügen
@@ -112,7 +113,7 @@ $(document).ready(function() {
 //###########################################################
 //Funktion, um eine einzelne Zeile mit einem Klick zu löschen
 //###########################################################
-/*
+	/*
 	$("tbody #deleteButton").on("click",function() {
         var tr = $(this).closest('tr');
         tr.fadeOut(400, function(){
@@ -129,7 +130,7 @@ $(document).ready(function() {
 		});
         location.reload();
     });
-*/
+	*/
 	if($('tbody').find('tr:first').find('td:nth-child(2)').find("input").val() != 1) {
 		$('tbody').find('tr').each(function(i){
 	        $(this).find('td:nth-child(2)').each(function(){
@@ -138,6 +139,58 @@ $(document).ready(function() {
     	});
 	}
 
+	//########################################################
+	//Funktion, um die aktuelle Sendung mit Button zu starten
+	//########################################################
+	//funktioniert bisher mit einer Position
+	//muss noch dynamisch in Schleifen angepasst werden für alle Positionen
+	//die echtzeit wird bisher per Javascript erzeugt (lokal) -> muss noch mit php realisiert werden
+	//"Countdown" bis zum Anfang der Sendung kann noch mit "setTimeout - Funktion" generiert werden und die Länge mit einer Variable
+
+
+	var start = 0;
+	$("#sendung_start").click(function(){
+		start = 1;
+	});
+
+	function starten(){
+
+		if(start == 1) {
+			start = 0;
+			var pos = $('tbody').find('tr:nth-child(1)').find('td:nth-child(5)').text();
+			var dauer = parseInt(moment(pos, "HH:mm:ss").format("mm")) * 60 + parseInt(moment(pos, "HH:mm:ss").format("ss"));
+			dauer = moment().add(dauer, "seconds").format("YYYY/MM/DD HH:mm:ss");
+
+			$("#time_1").text(function(){
+				$(this).countdown(dauer, function(event) {
+					$(this).html(event.strftime('%H:%M:%S'));
+				})
+			})
+
+			function write () {
+				var w_dauer = $('#time_1').text();
+				var w_id = $("#sendungID").val();
+				var w_pos = "1";
+				$.ajax({
+				    url: "c_crew.php?update",
+				    type: "post",
+				    data: {	'dauer': 	w_dauer,
+							'id' : 		w_id,
+							'pos' : 	w_pos},
+				});
+			}
+			setInterval(write, 1000);
+			
+		};
+	};
+	setInterval(starten, 500);
+
+	function neu(){
+		<?php renew(); ?>
+	}
+	setInterval(neu, 1000);
+
+	
 });
 </script>
 
